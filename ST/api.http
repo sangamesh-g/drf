@@ -1,0 +1,25 @@
+GET http://127.0.0.1:8000/api/employees
+
+
+###
+GET http://127.0.0.1:8000/api/employees/ http/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1NDU1MTA4LCJpYXQiOjE3NTU0NTQ4MDgsImp0aSI6IjkwZDJmNDhmNDZlYjRhMmQ5MzUzYzU1YWNjNmQ0MGU3IiwidXNlcl9pZCI6IjEifQ.zSctnCiBJKK_oKvsOcL6ZNo0SfFJWSZwZLZruBTyGfI
+
+###
+
+
+post http://127.0.0.1:8000/api/employees/ http/1.1
+Content-Type: application/json
+
+{
+    "first_name": "sai",
+    "last_name": "vamshi",
+    "email": "karamkanti@gmail.com",
+    "phone_number": "1234567890"
+}
+
+
+###
+
+GET http://127.0.0.1:8000/api/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR...
