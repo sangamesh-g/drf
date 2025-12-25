@@ -68,3 +68,10 @@ class RegisterView(APIView):
         },
         status=status.HTTP_201_CREATED
         )
+    
+
+from .serializers import LoginSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class LoginView(TokenObtainPairView):
+    serializer_class=LoginSerializer

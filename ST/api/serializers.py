@@ -43,3 +43,15 @@ class RegisterSerializer(serializers.Serializer):
             fullname=validated_data['fullname']
         )
         return user
+    
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+class LoginSerializer(TokenObtainPairSerializer):
+
+    def validate(self,attrs):
+        data=super().validate(attrs)
+
+        data["user"]={
+            "username":self.user.username,
+            "email":self.user.email,
+        }
+        return data

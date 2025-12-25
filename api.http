@@ -32,3 +32,30 @@ Content-Type: application/json
   "fullname":"sangamesh"
 }
 
+###
+
+POST http://127.0.0.1:8000/api/login/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "username":"sangu",
+  "password":"1234"
+}
+
+###
+
+GET http://127.0.0.1:8000/api/employees/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY2NjY4OTI1LCJpYXQiOjE3NjY2Njg2MjUsImp0aSI6ImExOGNiNDkxN2U3YzQ2MjhiNGRkM2ZjZGViMjQ4Y2RkIiwidXNlcl9pZCI6IjIifQ.NAcK1U4dMXTMloC-U8C-6MFS8lWOUJa4wKmAMNAjqrQ
+
+
+###
+
+POST  http://127.0.0.1:8000/api/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2Njc1NDg4MSwiaWF0IjoxNzY2NjY4NDgxLCJqdGkiOiI5MDM4ZjU4MWQxOGM0NTdmYTQzMTUzMTAxOWY5YjA1NyIsInVzZXJfaWQiOiIyIn0.9GhJYPea0Vh7jh9Bgtghi_3MbABYv8Uy4QHj8SNyNFA"
+
+}
+
+###
