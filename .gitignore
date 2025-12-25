@@ -1,0 +1,11 @@
+docs
+
+
+ST/ST/MIGRATIONS/*
+ST/API/MIGRATIONS/*
+ST/employees/MIGRATIONS/*
+
+ST/db.sqlite3
+ST/db.sqlite3
+ST/ST/__pycache__/settings.cpython-313.pyc
+ST/api/__pycache__

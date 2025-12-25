@@ -1,0 +1,34 @@
+
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{
+  "username": "sangamesh",
+  "password": "1234"
+}
+
+###
+
+POST http://127.0.0.1:8000/api/token/
+Content-Type: application/json
+
+{
+  "username":"sangu",
+  "password":"1234"
+
+}
+
+
+
+###
+
+POST http://127.0.0.1:8000/api/register/
+Content-Type: application/json
+
+{
+  "username":"sangu",
+  "password":"1234",
+  "email":"sangu@example.com",
+  "fullname":"sangamesh"
+}
+

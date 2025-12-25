@@ -48,3 +48,23 @@ class employee_detail(APIView):
             return Response(status=404)
         employee.delete()
         return Response(status=204)
+    
+
+from .serializers import RegisterSerializer
+from rest_framework import status
+
+class RegisterView(APIView):
+    permission_classes=[]
+
+    def post(self,request):
+        serializer=RegisterSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        user=serializer.save()
+
+        return Response({
+            "message":"User registered successfully",
+            'user':user.username
+        },
+        status=status.HTTP_201_CREATED
+        )

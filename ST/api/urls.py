@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import employees, employee_detail
+from .views import RegisterView as R
 
 urlpatterns = [
     path('',employees.as_view()),
