@@ -52,9 +52,13 @@ class employee_detail(APIView):
 
 from .serializers import RegisterSerializer
 from rest_framework import status
+from rest_framework.throttling import ScopedRateThrottle
 
 class RegisterView(APIView):
     permission_classes=[]
+    throttle_classes=[ScopedRateThrottle]
+    throttle_scope="register"
+
 
     def post(self,request):
         serializer=RegisterSerializer(data=request.data)

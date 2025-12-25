@@ -9,3 +9,4 @@ tzdata                    ==    2025.2
 
 markdown
 django-filter
+drf-spectacular

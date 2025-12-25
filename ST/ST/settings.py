@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'employees',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,34 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    #this is for swagger generation
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    "DEFAULT_THROTTLE_CLASSES":[
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        #no (doesnt work automatically,should be manually done)
+        #write throttle_class,throttle_scope in view adn matching rate here
+        #throttle scope rate should be given value here
+        # "rest_framework.throttling.ScopedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES":{
+        "anon":"100/hour",
+        "user":"1000/hour",
+        "login":"10/min",
+        "register":"3/min",
+        "upload":"10/day",
+    }
+}
+
+#swagger settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "My API",
+    "DESCRIPTION": "Production-ready API documentation_",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
