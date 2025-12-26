@@ -147,7 +147,11 @@ REST_FRAMEWORK = {
         "login":"10/min",
         "register":"3/min",
         "upload":"10/day",
-    }
+    },
+    "DEFAULT_PERMISSION_CLASSES":[
+        'rest_framework.permissions.IsAuthenticated',
+        #ONLY THIS CLASS IS THERE BY DEFAULT NOW,SO ALL APIS NEED AUTHENTICATION
+    ]
 }
 
 #swagger settings
