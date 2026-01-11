@@ -217,3 +217,33 @@ CELERY_BEAT_SCHEDULE = {
 
 # Redis
 #   → remembers state
+#important commands
+#redis-cli(to enter redis cli)
+# INFO memory(for redis memory usage): https://redis.io/docs/manual/memory/
+# SELECT 0 (to check different redis dbs)
+# scan 0 (to see keys in redis) 0means db,can be 1,2,3...
+# KEYS * (to see all keys,not for production)
+# FLUSHDB (to clear current db)
+# FLUSHALL (to clear all dbs)
+# get key_name (to get value of a key)
+#set key_name value (to set value of a key)
+# DEL key_name (to delete a key)
+# MEMORY USAGE key_name (to see memory used by a key)
+# TTL key_name (to see time to live of a key)
+# EXPIRE key_name seconds (to set expiry time of a key)
+# PERSIST key_name (to remove expiry time of a key)
+# monitor (to monitor redis commands in real-time)
+#CONFIG GET dir (to get redis config location)
+
+
+'''
+redis-cli
+SELECT 0
+INFO memory
+SCAN 0
+TYPE key
+GET / HGETALL / LRANGE
+MEMORY USAGE key
+TTL key
+'''
+
