@@ -79,3 +79,66 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 class LoginView(TokenObtainPairView):
     serializer_class=LoginSerializer
+
+
+from celery.result import AsyncResult
+from celery.app.control import Control
+from .tasks import process_report
+from ST.celery import app
+import redis
+
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
+
+class StartReportAPIView(APIView):
+    """
+    Covers:
+    - .delay()
+    - immediate response
+    """
+
+    def post(self, request):
+        report_id = request.data.get("report_id")
+
+        task = process_report.delay(report_id)
+
+        return Response({
+            "task_id": task.id,
+            "message": "Report processing started"
+        }, status=202)
+
+
+class ReportStatusAPIView(APIView):
+    """
+    Covers:
+    - task status
+    - redis progress
+    """
+
+    def get(self, request, task_id):
+        result = AsyncResult(task_id)
+
+        progress = redis_client.get(f"report:progress:{task_id}")
+        progress = int(progress) if progress else 0
+
+        return Response({
+            "task_id": task_id,
+            "status": result.status,
+            "progress": progress,
+            "result": result.result
+        })
+
+
+class CancelReportAPIView(APIView):
+    """
+    Covers:
+    - task cancellation
+    """
+
+    def post(self, request, task_id):
+        control = Control(app)
+        control.revoke(task_id, terminate=True)
+
+        return Response({
+            "task_id": task_id,
+            "message": "Task cancelled"
+        })

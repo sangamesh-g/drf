@@ -191,3 +191,29 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_ENABLE_UTC = False
+
+# settings.py (conceptual)
+CELERY_BEAT_SCHEDULE = {
+    "nightly-report-cleanup": {
+        "task": "reports.tasks.process_report",
+        "schedule": 86400,  # once a day
+        "args": (123,)
+    }
+}
+# celery beat means task creator/scheduler
+# celery worker means task executor/processor
+
+# views.py
+#   → only sends tasks
+#   → never waits
+
+# tasks.py
+#   → does real work
+#   → retries
+#   → tracks progress
+
+# RabbitMQ
+#   → carries tasks
+
+# Redis
+#   → remembers state

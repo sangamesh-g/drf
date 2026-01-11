@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 )
 from .views import RegisterView,LoginView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from .views import *
 
 urlpatterns = [
     path('employees/',employees.as_view()),
@@ -15,6 +16,9 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # Refresh
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
+    path('start-report/', StartReportAPIView.as_view(), name='start-report'),
+    path('report-status/<str:task_id>/', ReportStatusAPIView.as_view(), name='report-status'),
+    path('cancel-report/<str:task_id>/', CancelReportAPIView.as_view(), name='cancel-report'),
 ]
 
 urlpatterns += [
