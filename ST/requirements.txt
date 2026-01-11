@@ -10,3 +10,10 @@ tzdata                    ==    2025.2
 markdown
 django-filter
 drf-spectacular
+
+redis
+celery
+django-redis
+django-celery-results
+django-celery-beat
+kombu
