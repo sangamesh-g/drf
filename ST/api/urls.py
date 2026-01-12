@@ -19,6 +19,8 @@ urlpatterns = [
     path('start-report/', StartReportAPIView.as_view(), name='start-report'),
     path('report-status/<str:task_id>/', ReportStatusAPIView.as_view(), name='report-status'),
     path('cancel-report/<str:task_id>/', CancelReportAPIView.as_view(), name='cancel-report'),
+    path('generate-text/', generate_text, name='generate-text'),
+    path('task-status/<str:task_id>/', task_status, name='task-status'),
 ]
 
 urlpatterns += [

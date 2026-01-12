@@ -55,3 +55,14 @@ class LoginSerializer(TokenObtainPairSerializer):
             "email":self.user.email,
         }
         return data
+
+
+class GenerateTextSerializer(serializers.Serializer):
+    prompt = serializers.CharField(
+        max_length=5000,
+        help_text="Prompt sent to the LLM"
+    )
+    model = serializers.CharField(
+        required=False,
+        default="deepseek-coder:6.7b"
+    )

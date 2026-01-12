@@ -52,3 +52,22 @@ def process_report(self, report_id):
         "report_id": report_id,
         "status": "processed"
     }
+
+
+import ollama
+#only ollama is enough it will communicate with llms in local ollama server
+
+@shared_task(bind=True, soft_time_limit=300, time_limit=600)
+def run_ollama_prompt(self, prompt, model="deepseek-coder:6.7b"):
+    response = ollama.chat(
+        model=model,
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt},
+        ],
+        options={
+            "temperature": 0.2,
+            "num_ctx": 4096,
+        }
+    )
+    return response["message"]["content"]

@@ -17,3 +17,6 @@ django-redis
 django-celery-results
 django-celery-beat
 kombu
+
+
+ollama

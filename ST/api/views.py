@@ -142,3 +142,65 @@ class CancelReportAPIView(APIView):
             "task_id": task_id,
             "message": "Task cancelled"
         })
+    
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from celery.result import AsyncResult
+
+from .serializers import GenerateTextSerializer
+from .tasks import run_ollama_prompt
+from drf_spectacular.utils import extend_schema
+'''
+2️⃣ When @extend_schema is REQUIRED
+
+You MUST use it when:
+
+    Using @api_view (function-based views)
+    Swagger doesn’t show parameters correctly
+    You want explicit request/response contracts
+
+Without it, Swagger often behaves inconsistently.
+
+
+celery -A ST worker -l info --pool=solo
+2️⃣ -A ST — Application / project reference
+3️⃣ worker — start a worker process
+4️⃣ -l info — logging level
+5️⃣ --pool=solo — use solo pool for compatibility on Windows
+
+
+django-celery-results - the results backend for storing task results in the database ,id generated when task is created
+django-celery-beat - for periodic tasks scheduling
+'''
+@extend_schema( request=GenerateTextSerializer, responses={202: dict}, description="Generate text using LLM. Requires 'prompt' field in request body."
+)
+@api_view(["POST"])
+def generate_text(request):
+    serializer = GenerateTextSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+
+    prompt = serializer.validated_data["prompt"]
+    model = serializer.validated_data.get("model", "deepseek-coder:6.7b")
+
+    task = run_ollama_prompt.delay(prompt, model)
+
+    return Response(
+        {
+            "task_id": task.id,
+            "status": "processing"
+        },
+        status=status.HTTP_202_ACCEPTED
+    )
+
+
+@api_view(["GET"])
+def task_status(request, task_id):
+    result = AsyncResult(task_id)
+
+    return Response({
+        "task_id": task_id,
+        "state": result.state,
+        "result": result.result if result.successful() else None,
+    })
